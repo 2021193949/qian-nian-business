@@ -1,0 +1,1301 @@
+<!doctype html>
+<html lang="zh-CN" data-visualize-standalone>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<title>千年商业局势操作台</title>
+<style>:root {
+  color-scheme: light dark;
+  background-color: transparent !important;
+
+  /* Agent-facing contract; keep in sync with SKILL.md. */
+  --background: var(
+    --main-surface-primary,
+    light-dark(rgb(255 255 255), rgb(24 24 24))
+  );
+  --foreground: light-dark(rgb(26 28 31), rgb(255 255 255));
+  --card: color-mix(in oklab, var(--foreground) 5%, transparent);
+  --card-foreground: var(--foreground);
+  --popover: light-dark(rgb(255 255 255), rgb(45 45 45));
+  --popover-foreground: var(--foreground);
+  --primary: light-dark(rgb(51 156 255), rgb(131 195 255));
+  --primary-foreground: light-dark(rgb(255 255 255), rgb(13 13 13));
+  --secondary: light-dark(rgb(255 255 255 / 96%), rgb(54 54 54 / 96%));
+  --secondary-foreground: var(--foreground);
+  --muted: color-mix(in srgb, var(--foreground) 10%, transparent);
+  --muted-foreground: light-dark(
+    rgb(26 28 31 / 49.4%),
+    rgb(255 255 255 / 49.8%)
+  );
+  --accent: light-dark(rgb(229 242 255), rgb(13 39 63));
+  --accent-foreground: var(--primary);
+  --destructive: light-dark(rgb(226 85 7), rgb(255 133 73));
+  --border: light-dark(rgb(26 28 31 / 8%), rgb(255 255 255 / 8.2%));
+  --input: light-dark(
+    rgb(26 28 31 / 11.8%),
+    color-mix(in oklab, rgb(0 0 0) 10%, transparent)
+  );
+  --ring: light-dark(rgb(51 156 255), rgb(131 195 255 / 76%));
+  --font-size-base: 14px;
+
+  /* Internal implementation variables; not part of the agent contract. */
+  --font-sans: -apple-system, system-ui, "Segoe UI", sans-serif;
+  --font-mono:
+    ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono",
+    monospace;
+  --font-size-normal: max(11px, var(--font-size-base));
+  --font-size-tooltip: calc(var(--font-size-base) - 1px);
+  --font-size-small: max(11px, calc(var(--font-size-base) - 2px));
+  --font-size-h1: calc(var(--font-size-normal) * 1.7142857143);
+  --font-size-h2: calc(var(--font-size-normal) * 1.4285714286);
+  --font-size-h3: calc(var(--font-size-normal) * 1.2857142857);
+  --font-weight-normal: 430;
+  --font-weight-medium: 500;
+  --line-height-normal: calc(var(--font-size-normal) * 1.5);
+  --line-height-tooltip: calc(var(--font-size-tooltip) * 1.4285714286);
+  --line-height-small: calc(var(--font-size-small) + 4px);
+  --radius: 10px;
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-2xl: calc(var(--radius) * 1.6);
+  --radius-full: 9999px;
+  --shadow-sm: 0 1px 2px -1px rgb(0 0 0 / 8%);
+  --checkmark-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 17 17'%3E%3Cpath d='M12.8961 3.64101C13.1297 3.41418 13.4984 3.37523 13.7779 3.56581C14.0571 3.75635 14.1554 4.11331 14.0299 4.41347L13.9615 4.53847L7.71151 13.7045C7.59411 13.8767 7.4063 13.9877 7.19881 14.0072C6.99136 14.0267 6.78564 13.9533 6.63826 13.806L2.88826 10.056L2.79842 9.9457C2.6192 9.67407 2.64927 9.30496 2.88826 9.06581C3.12738 8.82669 3.49647 8.79676 3.76815 8.97597L3.8785 9.06581L7.03084 12.2182L12.8053 3.74941L12.8961 3.64101Z'/%3E%3C/svg%3E");
+
+  /* Legacy aliases; not part of the current agent contract. */
+  --viz-bg: transparent;
+  --viz-panel: var(--card);
+  --viz-border: var(--border);
+  --viz-text: var(--foreground);
+  --viz-muted: var(--muted-foreground);
+  --viz-accent: var(--primary);
+  --viz-accent-text: var(--primary-foreground);
+  --viz-accent-bg: var(--accent);
+  --viz-font-size: var(--font-size-base);
+  --viz-warning: var(--destructive);
+  --color-background-primary: var(--background);
+  --color-text-primary: var(--foreground);
+  --color-border-secondary: var(--border);
+}
+
+:root[data-visualize-standalone] {
+  background-color: var(--background) !important;
+}
+
+/* Generic mobile code-block hosts provide light/dark mode but no series palette.
+   AppBlock hosts set all six variables themselves. */
+:root:not([data-app-block-surface]) {
+  --viz-series-1: var(--primary);
+  --viz-series-2: light-dark(#f3883b, #f59a56);
+  --viz-series-3: light-dark(#5dc977, #74d58b);
+  --viz-series-4: light-dark(#eb77b1, #f08fc0);
+  --viz-series-5: light-dark(#9b79ec, #aa91ef);
+  --viz-series-6: light-dark(#3ab9b1, #5acbc2);
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html > body {
+  margin: 0;
+  padding: 5px;
+  color: var(--foreground);
+  background: transparent !important;
+  font-family: var(--font-sans);
+  font-size: var(--font-size-normal);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-normal);
+}
+
+:root:not([data-app-block-surface]) > body {
+  padding: 12px;
+}
+
+a {
+  color: color-mix(in srgb, var(--viz-accent) 80%, var(--viz-text) 20%);
+  cursor: pointer;
+  font-weight: var(--viz-font-weight-medium);
+  text-decoration: none;
+  text-underline-offset: 2px;
+}
+
+a:is(:hover, :focus-visible) {
+  text-decoration-line: underline;
+  text-decoration-style: dashed;
+  text-decoration-thickness: 0.5px;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin-block: 0;
+}
+
+h1 {
+  font-size: var(--font-size-h1);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+h2 {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+h3,
+h4,
+h5,
+h6 {
+  font-size: var(--font-size-h3);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.3;
+}
+
+b,
+strong,
+th {
+  font-weight: var(--font-weight-medium);
+}
+
+code:not(pre code) {
+  display: inline;
+  padding: 1px 6px;
+  border-radius: var(--radius-sm);
+  background: var(--muted);
+  font-family: var(--font-mono);
+  font-size: 0.92em;
+  overflow-wrap: anywhere;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  word-break: break-word;
+}
+
+#widget {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  padding: 0;
+  background: transparent !important;
+}
+
+.card {
+  min-width: 0;
+  padding: 12px;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  border-radius: var(--radius-2xl);
+  color: var(--card-foreground);
+  background: var(--card);
+}
+
+#widget > :not(.card) {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+.tooltip {
+  position: fixed;
+  z-index: 50;
+  top: 0;
+  left: 0;
+  width: max-content;
+  max-width: min(
+    20rem,
+    var(--tooltip-available-width, calc(100vw - 10px)),
+    calc(100vw - 10px)
+  );
+  max-height: min(
+    var(--tooltip-available-height, calc(100vh - 10px)),
+    calc(100vh - 10px)
+  );
+  padding: 4px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  color: var(--popover-foreground);
+  background: var(--popover);
+  box-shadow: none;
+  font-size: var(--font-size-tooltip);
+  line-height: var(--line-height-tooltip);
+  overflow-wrap: break-word;
+  white-space: normal;
+  pointer-events: none;
+  user-select: none;
+}
+
+.viz-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(max(180px, 24%), 1fr));
+  gap: 10px;
+}
+
+.viz-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.viz-stat-value {
+  font-size: var(--font-size-h2);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+}
+
+.viz-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.viz-badge {
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+  color: var(--accent-foreground);
+  background: var(--accent);
+  font-weight: var(--font-weight-medium);
+}
+
+small,
+.text-small,
+.viz-badge {
+  font-size: var(--font-size-small);
+  line-height: var(--line-height-small);
+}
+
+.text-muted {
+  color: var(--muted-foreground);
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.viz-legend,
+.viz-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.viz-controls > .form-label {
+  display: grid;
+  min-width: min(100%, 260px);
+  flex: 1 1 280px;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  gap: 2px 12px;
+  margin-bottom: 0;
+}
+
+.viz-controls > .form-label > :is(.form-control, .form-range, .form-select) {
+  grid-column: 1 / -1;
+}
+
+.btn,
+.form-check-input,
+.form-control,
+.form-range,
+.form-select {
+  font: inherit;
+}
+
+.btn {
+  appearance: button;
+  display: inline-flex;
+  min-height: 28px;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  margin: 0;
+  padding: 0 8px;
+  -webkit-app-region: no-drag;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  color: var(--secondary-foreground);
+  background: var(--secondary);
+  cursor: var(--cursor-interaction, pointer);
+  text-align: center;
+  text-decoration: none;
+  white-space: nowrap;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+a.btn {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.btn:not(:disabled):hover {
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.btn-primary {
+  border-color: transparent;
+  color: var(--primary-foreground);
+  background: var(--foreground);
+  background-clip: padding-box;
+}
+
+.btn-primary:not(:disabled):hover {
+  background: color-mix(in srgb, var(--foreground) 80%, transparent);
+  background-clip: padding-box;
+}
+
+.btn-ghost {
+  border-color: transparent;
+  color: var(--muted-foreground);
+  background: transparent;
+}
+
+.btn-ghost:not(:disabled):hover {
+  color: var(--foreground);
+  background: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+[data-lucide] {
+  stroke-width: 1.6;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--foreground);
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  padding: 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  color: var(--foreground);
+  background: var(--secondary);
+}
+
+.form-control::placeholder {
+  color: var(--muted-foreground);
+}
+
+textarea.form-control {
+  height: auto;
+  min-height: 72px;
+  padding: 8px 10px;
+  resize: vertical;
+}
+
+.form-control:focus-visible {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-control:disabled,
+.form-select:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.form-select {
+  appearance: none;
+  display: block;
+  width: 100%;
+  min-height: 28px;
+  margin: 0;
+  padding: 0 32px 0 8px;
+  outline: none;
+  border: 1px solid var(--input);
+  border-radius: var(--radius-lg);
+  color: var(--foreground);
+  background-color: var(--secondary);
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--muted-foreground) 50%),
+    linear-gradient(135deg, var(--muted-foreground) 50%, transparent 50%);
+  background-position:
+    calc(100% - 14px) 50%,
+    calc(100% - 10px) 50%;
+  background-repeat: no-repeat;
+  background-size: 4px 4px;
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-select:not(:disabled):hover {
+  background-color: color-mix(in srgb, var(--foreground) 6%, var(--secondary));
+}
+
+.form-select:focus-visible {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-check {
+  display: flex;
+  min-height: 20px;
+  align-items: center;
+  gap: 6px;
+}
+
+.form-check-input {
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  flex: 0 0 auto;
+  margin: 0;
+  border: 1px solid var(--input);
+  color: var(--primary-foreground);
+  background-color: transparent;
+  cursor: var(--cursor-interaction, default);
+  transition:
+    background-color 150ms,
+    border-color 150ms,
+    box-shadow 150ms;
+}
+
+.form-check:not(.form-switch) .form-check-input[type="checkbox"] {
+  border-color: var(--input);
+  border-radius: var(--radius-sm);
+  background-color: var(--secondary);
+  box-shadow: var(--shadow-sm);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input:not(:disabled):not(:checked):hover {
+  background-color: var(--card);
+}
+
+.form-check:not(.form-switch) .form-check-input[type="checkbox"]:checked {
+  border-color: var(--primary);
+  background-color: var(--primary);
+}
+
+.form-check:not(.form-switch)
+  .form-check-input[type="checkbox"]:checked::before {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: var(--primary-foreground);
+  content: "";
+  mask: var(--checkmark-image) center / 12px 12px no-repeat;
+}
+
+.form-check-input[type="radio"] {
+  width: 14px;
+  height: 14px;
+  border-radius: var(--radius-full);
+}
+
+.form-check-input[type="radio"]:checked {
+  border: 2px solid var(--primary);
+  background:
+    radial-gradient(circle, var(--primary-foreground) 0 2.5px, transparent 3px),
+    var(--primary);
+}
+
+.form-check:not(.form-switch) .form-check-input:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled {
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.form-check:not(.form-switch) .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+}
+
+.form-switch .form-check-input:disabled,
+.form-switch .form-check-input:disabled + .form-check-label {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.form-check-label {
+  color: var(--foreground);
+  cursor: var(--cursor-interaction, default);
+}
+
+.form-switch .form-check-input {
+  position: relative;
+  width: 32px;
+  height: 20px;
+  border: 0;
+  border-radius: var(--radius-full);
+  background: var(--muted);
+  box-shadow: none;
+  transition: background-color 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input::before {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  box-sizing: border-box;
+  border: 1px solid light-dark(var(--primary-foreground), var(--foreground));
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+  box-shadow: var(--shadow-sm);
+  content: "";
+  transform: translate(2px, -50%);
+  transition: transform 200ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.form-switch .form-check-input:checked {
+  background: var(--primary);
+}
+
+.form-switch .form-check-input:checked::before {
+  transform: translate(14px, -50%);
+}
+
+.form-switch .form-check-input:focus-visible {
+  box-shadow: 0 0 0 2px var(--ring);
+}
+
+.form-range {
+  appearance: none;
+  display: block;
+  width: 100%;
+  height: 28px;
+  flex: 1;
+  margin: 0;
+  padding: 0;
+  outline: none;
+  border: 0;
+  accent-color: var(--primary);
+  background: linear-gradient(
+      color-mix(in srgb, var(--foreground) 7%, transparent),
+      color-mix(in srgb, var(--foreground) 7%, transparent)
+    )
+    center / 100% 2px no-repeat;
+}
+
+.form-range::-webkit-slider-runnable-track {
+  height: 28px;
+  background: transparent;
+}
+
+.form-range::-webkit-slider-thumb {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  margin-top: 4px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+}
+
+.form-range:focus-visible::-webkit-slider-thumb {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-range::-moz-range-track {
+  height: 28px;
+  background: transparent;
+}
+
+.form-range::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background: light-dark(var(--primary-foreground), var(--foreground));
+}
+
+.form-range:focus-visible::-moz-range-thumb {
+  border-color: var(--ring);
+  box-shadow: inset 0 0 0 1px var(--ring);
+}
+
+.form-range:disabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.btn:not(.btn-primary, .viz-tile):is(
+    [aria-pressed="true"],
+    [aria-selected="true"],
+    .is-selected
+  ) {
+  border-color: var(--primary);
+  color: var(--primary-foreground);
+  background: var(--primary);
+}
+
+.btn.viz-tile:is([aria-pressed="true"], [aria-selected="true"], .is-selected) {
+  border-color: var(--primary);
+  box-shadow: inset 0 0 0 1px var(--primary);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+#widget > svg {
+  width: 100%;
+}
+
+.text-warning,
+.text-destructive {
+  color: var(--destructive);
+}
+</style>
+</head>
+<body>
+<div id="ink-cockpit">
+  <style>
+    #ink-cockpit {
+      --paper-wash: color-mix(in srgb, var(--background) 94%, var(--viz-series-4));
+      --paper-panel: color-mix(in srgb, var(--card) 94%, var(--viz-series-4));
+      --ink-line: color-mix(in srgb, var(--border) 72%, var(--foreground));
+      width: 100%;
+      color: var(--foreground);
+      background:
+        radial-gradient(circle at 50% 35%, color-mix(in srgb, var(--viz-series-4) 7%, transparent), transparent 34%),
+        var(--paper-wash);
+      border: 1px solid var(--border);
+      overflow: hidden;
+      font-family: ui-sans-serif, system-ui, sans-serif;
+    }
+    #ink-cockpit .ic-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      background: color-mix(in srgb, var(--card) 82%, transparent);
+    }
+    #ink-cockpit .ic-brand { display: flex; align-items: center; gap: 10px; min-width: 0; }
+    #ink-cockpit .ic-seal {
+      display: grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      flex: 0 0 34px;
+      border: 2px solid var(--viz-series-1);
+      color: var(--foreground);
+      font-weight: 500;
+    }
+    #ink-cockpit .ic-brand-copy { display: grid; gap: 2px; }
+    #ink-cockpit .ic-brand-copy strong { font-weight: 500; letter-spacing: .08em; }
+    #ink-cockpit .ic-brand-copy span { color: var(--muted-foreground); }
+    #ink-cockpit .ic-status { display: inline-flex; align-items: center; gap: 7px; color: var(--muted-foreground); }
+    #ink-cockpit .ic-status::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--viz-series-2); }
+    #ink-cockpit .ic-toolbar {
+      display: flex;
+      align-items: end;
+      gap: 10px;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+    #ink-cockpit .ic-toolbar .form-label { flex: 1 1 180px; }
+    #ink-cockpit .ic-view-buttons { margin-left: auto; }
+    #ink-cockpit .ic-grid {
+      display: grid;
+      grid-template-columns: minmax(210px, .78fr) minmax(360px, 1.55fr) minmax(250px, .92fr);
+      min-height: 560px;
+    }
+    #ink-cockpit .ic-inputs,
+    #ink-cockpit .ic-right { background: color-mix(in srgb, var(--paper-panel) 88%, transparent); }
+    #ink-cockpit .ic-inputs { border-right: 1px solid var(--border); padding: 14px; }
+    #ink-cockpit .ic-section-label { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 12px; }
+    #ink-cockpit .ic-section-label strong { font-weight: 500; }
+    #ink-cockpit .ic-section-label span { color: var(--muted-foreground); }
+    #ink-cockpit .ic-form-stack { display: grid; gap: 10px; }
+    #ink-cockpit .ic-inputs textarea { min-height: 88px; resize: vertical; }
+    #ink-cockpit .ic-inputs .btn { width: 100%; margin-top: 2px; }
+    #ink-cockpit .ic-map-zone { min-width: 0; padding: 14px 12px 8px; display: flex; flex-direction: column; }
+    #ink-cockpit .ic-map-zone .ic-section-label { padding: 0 4px; }
+    #ink-cockpit .ic-map-wrap { position: relative; flex: 1; min-height: 420px; }
+    #ink-cockpit .ic-map { width: 100%; height: 100%; min-height: 420px; display: block; }
+    #ink-cockpit .ic-map .orbit { fill: none; stroke: var(--border); stroke-width: 1; stroke-dasharray: 5 7; }
+    #ink-cockpit .ic-map .link { stroke: var(--ink-line); stroke-width: 1.1; opacity: .28; transition: opacity 220ms ease, stroke-width 220ms ease, stroke 220ms ease; }
+    #ink-cockpit .ic-map .link.strong { stroke: var(--foreground); opacity: .58; }
+    #ink-cockpit .ic-map .link.active { stroke: var(--viz-series-1); stroke-width: 3; opacity: 1; }
+    #ink-cockpit .ic-map .node circle { fill: var(--paper-panel); stroke: var(--ink-line); stroke-width: 1.4; transition: fill 220ms ease, stroke 220ms ease, stroke-width 220ms ease; }
+    #ink-cockpit .ic-map .node.focus circle { fill: color-mix(in srgb, var(--viz-series-1) 14%, var(--paper-panel)); stroke: var(--viz-series-1); stroke-width: 3; }
+    #ink-cockpit .ic-map .node text { fill: var(--foreground); text-anchor: middle; dominant-baseline: middle; font-weight: 500; }
+    #ink-cockpit .ic-map .node .sub { fill: var(--muted-foreground); font-weight: 400; }
+    #ink-cockpit .ic-map .lever-dot { fill: var(--paper-panel); stroke: var(--viz-series-1); stroke-width: 3; }
+    #ink-cockpit .ic-map .lever-line { stroke: var(--viz-series-1); stroke-width: 1.5; }
+    #ink-cockpit .ic-map .lever-text { fill: var(--foreground); font-weight: 500; }
+    #ink-cockpit .ic-selected-line { border-top: 1px solid var(--border); padding: 9px 4px 0; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+    #ink-cockpit .ic-selected-line strong { font-weight: 500; }
+    #ink-cockpit .ic-selected-line span { color: var(--muted-foreground); }
+    #ink-cockpit .ic-right { border-left: 1px solid var(--border); display: grid; grid-template-rows: auto 1fr; }
+    #ink-cockpit .ic-mirror { padding: 14px; border-bottom: 1px solid var(--border); }
+    #ink-cockpit .ic-mirror h3 { margin: 8px 0 2px; font-weight: 500; letter-spacing: .08em; }
+    #ink-cockpit .ic-mirror .ic-era { color: var(--muted-foreground); }
+    #ink-cockpit .ic-match { display: grid; grid-template-columns: 1fr auto; gap: 5px 10px; align-items: center; margin-top: 12px; }
+    #ink-cockpit .ic-match strong { font-weight: 500; }
+    #ink-cockpit .ic-match-track { grid-column: 1 / 3; height: 4px; background: var(--muted); overflow: hidden; }
+    #ink-cockpit .ic-match-bar { display: block; height: 100%; width: 82%; background: var(--viz-series-1); transition: width 260ms ease; }
+    #ink-cockpit .ic-mirror blockquote { margin: 12px 0 0; padding-left: 10px; border-left: 2px solid var(--viz-series-1); color: var(--card-foreground); }
+    #ink-cockpit .ic-strategies { padding: 14px; }
+    #ink-cockpit .ic-strategy-list { display: grid; gap: 8px; }
+    #ink-cockpit .ic-strategy { width: 100%; display: grid; grid-template-columns: 1fr auto; text-align: left; align-items: start; }
+    #ink-cockpit .ic-strategy span { display: grid; gap: 2px; }
+    #ink-cockpit .ic-strategy strong { font-weight: 500; }
+    #ink-cockpit .ic-strategy em { color: var(--muted-foreground); font-style: normal; }
+    #ink-cockpit .ic-strategy b { font-weight: 500; }
+    #ink-cockpit .ic-bottom { display: grid; grid-template-columns: 210px 1fr; gap: 16px; padding: 14px 16px; border-top: 1px solid var(--border); background: color-mix(in srgb, var(--card) 78%, transparent); }
+    #ink-cockpit .ic-path-intro strong { display: block; font-weight: 500; }
+    #ink-cockpit .ic-path-intro span { color: var(--muted-foreground); }
+    #ink-cockpit .ic-path { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+    #ink-cockpit .ic-step { border-top: 2px solid var(--border); padding-top: 6px; }
+    #ink-cockpit .ic-step.active { border-top-color: var(--viz-series-1); }
+    #ink-cockpit .ic-step strong { display: block; font-weight: 500; }
+    #ink-cockpit .ic-step span { color: var(--muted-foreground); }
+    @media (max-width: 900px) {
+      #ink-cockpit .ic-grid { grid-template-columns: minmax(200px, .8fr) minmax(360px, 1.4fr); }
+      #ink-cockpit .ic-right { grid-column: 1 / 3; grid-template-columns: 1fr 1.2fr; grid-template-rows: auto; border-left: 0; border-top: 1px solid var(--border); }
+      #ink-cockpit .ic-mirror { border-bottom: 0; border-right: 1px solid var(--border); }
+    }
+    @media (max-width: 650px) {
+      #ink-cockpit .ic-grid { grid-template-columns: 1fr; }
+      #ink-cockpit .ic-inputs { border-right: 0; border-bottom: 1px solid var(--border); }
+      #ink-cockpit .ic-map-zone { min-height: 500px; }
+      #ink-cockpit .ic-right { grid-column: auto; grid-template-columns: 1fr; }
+      #ink-cockpit .ic-mirror { border-right: 0; border-bottom: 1px solid var(--border); }
+      #ink-cockpit .ic-bottom { grid-template-columns: 1fr; }
+      #ink-cockpit .ic-path { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      #ink-cockpit .ic-status { display: none; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      #ink-cockpit * { transition: none !important; }
+    }
+  </style>
+
+  <div class="ic-header">
+    <div class="ic-brand">
+      <span class="ic-seal" aria-hidden="true">局</span>
+      <span class="ic-brand-copy"><strong>千年商业局势操作台</strong><span class="text-small">古典智慧 × 现代决策</span></span>
+    </div>
+    <span class="ic-status text-small">推演已就绪</span>
+  </div>
+
+  <div class="ic-toolbar">
+    <label class="form-label" for="ic-scenario">快速体验
+      <select class="form-select" id="ic-scenario">
+        <option value="beauty">新消费品牌破局</option>
+        <option value="saas">小团队挑战大厂</option>
+        <option value="retail">传统零售转型</option>
+      </select>
+    </label>
+    <label class="form-label" for="ic-focus">聚焦观察
+      <select class="form-select" id="ic-focus">
+        <option value="self">我方</option>
+        <option value="rival">对手</option>
+        <option value="user">用户</option>
+        <option value="channel">渠道</option>
+        <option value="resource">资源</option>
+        <option value="timing">时机</option>
+      </select>
+    </label>
+    <div class="viz-controls ic-view-buttons" aria-label="局势视图">
+      <button class="btn btn-primary" type="button" data-view="relation" aria-pressed="true">关系视图</button>
+      <button class="btn" type="button" data-view="impact" aria-pressed="false">影响力视图</button>
+    </div>
+  </div>
+
+  <div class="ic-grid">
+    <section class="ic-inputs" aria-label="描述你的局面">
+      <div class="ic-section-label"><strong>01 · 描述你的局面</strong><span class="text-small">可修改</span></div>
+      <div class="ic-form-stack">
+        <label class="form-label" for="ic-self">我是谁？<input class="form-control" id="ic-self" value="新锐美妆品牌"></label>
+        <label class="form-label" for="ic-rival">主要对手<input class="form-control" id="ic-rival" value="国际中高端美妆品牌"></label>
+        <label class="form-label" for="ic-user">关键用户<input class="form-control" id="ic-user" value="18–30 岁成分党女性"></label>
+        <label class="form-label" for="ic-goal">我想赢什么？<input class="form-control" id="ic-goal" value="12 个月进入细分市场 TOP 3"></label>
+        <label class="form-label" for="ic-context">关键背景<textarea class="form-control" id="ic-context">对手预算充足、品牌认知强；我方预算有限、产品迭代快；线上种草成本持续上升。</textarea></label>
+        <button class="btn btn-primary" id="ic-generate" type="button">生成局势分析</button>
+      </div>
+    </section>
+
+    <section class="ic-map-zone" aria-label="局势关系图">
+      <div class="ic-section-label"><strong>02 · 局势盘</strong><span class="text-small" id="ic-map-mode">关系视图</span></div>
+      <div class="ic-map-wrap">
+        <svg class="ic-map" viewBox="0 0 600 500" role="img" aria-labelledby="ic-map-title ic-map-desc">
+          <title id="ic-map-title">商业局势关系图</title>
+          <desc id="ic-map-desc">展示我方、对手、用户、渠道、资源与时机之间的影响关系。</desc>
+          <ellipse class="orbit" cx="300" cy="250" rx="268" ry="218"></ellipse>
+          <ellipse class="orbit" cx="300" cy="250" rx="198" ry="158"></ellipse>
+          <g id="ic-links"></g>
+          <g class="node focus" data-node="self" transform="translate(300 82)"><circle r="53"></circle><text y="-6">我方</text><text class="sub" y="18">新锐品牌</text></g>
+          <g class="node" data-node="rival" transform="translate(474 190)"><circle r="53"></circle><text y="-6">对手</text><text class="sub" y="18">头部品牌</text></g>
+          <g class="node" data-node="user" transform="translate(450 385)"><circle r="53"></circle><text y="-6">用户</text><text class="sub" y="18">成分党</text></g>
+          <g class="node" data-node="channel" transform="translate(300 438)"><circle r="53"></circle><text y="-6">渠道</text><text class="sub" y="18">内容社区</text></g>
+          <g class="node" data-node="resource" transform="translate(145 360)"><circle r="53"></circle><text y="-6">资源</text><text class="sub" y="18">产品速度</text></g>
+          <g class="node" data-node="timing" transform="translate(126 185)"><circle r="53"></circle><text y="-6">时机</text><text class="sub" y="18">需求分化</text></g>
+          <line class="lever-line" x1="337" y1="120" x2="397" y2="105"></line>
+          <circle class="lever-dot" cx="397" cy="105" r="8"></circle>
+          <text class="lever-text" id="ic-lever" x="414" y="102">关键杠杆</text>
+          <text class="sub" id="ic-lever-sub" x="414" y="121">避开对手主战场</text>
+        </svg>
+      </div>
+      <div class="ic-selected-line" aria-live="polite"><span class="viz-badge" id="ic-focus-badge">当前观察 · 我方</span><strong id="ic-focus-title">决策速度与产品洞察</strong><span class="text-small" id="ic-focus-detail">优势：行动快，但资源必须聚焦</span></div>
+    </section>
+
+    <aside class="ic-right">
+      <section class="ic-mirror" aria-label="历史镜像">
+        <div class="ic-section-label"><strong>03 · 历史镜像</strong><span class="text-small" id="ic-era">三国</span></div>
+        <span class="text-small ic-era">你的局面更接近</span>
+        <h3 id="ic-mirror-name">刘备入蜀</h3>
+        <span class="text-small ic-era" id="ic-stage">核心阶段：建立根据地</span>
+        <div class="ic-match"><span>镜像匹配</span><strong id="ic-match-number">82%</strong><span class="ic-match-track"><i class="ic-match-bar" id="ic-match-bar"></i></span></div>
+        <blockquote id="ic-insight">与其在对手控制的高端叙事里正面消耗，不如先占据一个需求清晰、供给不足的细分人群。</blockquote>
+      </section>
+      <section class="ic-strategies" aria-label="可选策略">
+        <div class="ic-section-label"><strong>04 · 可选策略</strong><span class="text-small">点击推演</span></div>
+        <div class="ic-strategy-list">
+          <button class="btn btn-primary ic-strategy" type="button" data-strategy="avoid" aria-pressed="true"><span><strong>避实击虚</strong><em>《孙子兵法·虚实篇》</em></span><b>84%</b></button>
+          <button class="btn ic-strategy" type="button" data-strategy="ally" aria-pressed="false"><span><strong>联盟借势</strong><em>《三国演义·赤壁》</em></span><b>79%</b></button>
+          <button class="btn ic-strategy" type="button" data-strategy="defend" aria-pressed="false"><span><strong>先为不可胜</strong><em>《孙子兵法·军形篇》</em></span><b>77%</b></button>
+        </div>
+      </section>
+    </aside>
+  </div>
+
+  <div class="ic-bottom">
+    <div class="ic-path-intro"><strong id="ic-path-title">05 · 避实击虚</strong><span class="text-small">把经典原则拆成可验证的商业动作</span></div>
+    <div class="ic-path" aria-label="行动路径">
+      <div class="ic-step active"><strong>01 定义细分战场</strong><span class="text-small">第 1–2 周</span></div>
+      <div class="ic-step"><strong>02 验证关键需求</strong><span class="text-small">第 3–4 周</span></div>
+      <div class="ic-step"><strong>03 建立渠道样板</strong><span class="text-small">第 2–3 月</span></div>
+      <div class="ic-step"><strong>04 复制优势单元</strong><span class="text-small">第 4–6 月</span></div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var root = document.getElementById("ink-cockpit");
+      if (!root || root.dataset.ready === "true") return;
+      root.dataset.ready = "true";
+
+      var positions = {
+        self: [300, 82], rival: [474, 190], user: [450, 385],
+        channel: [300, 438], resource: [145, 360], timing: [126, 185]
+      };
+      var links = [
+        ["self", "rival"], ["self", "user"], ["self", "channel"],
+        ["self", "resource"], ["self", "timing"], ["rival", "user"],
+        ["rival", "channel"], ["rival", "resource"], ["rival", "timing"],
+        ["user", "channel"], ["user", "resource"], ["channel", "resource"],
+        ["channel", "timing"], ["resource", "timing"]
+      ];
+      var scenarios = {
+        beauty: {
+          self: "新锐美妆品牌", rival: "国际中高端美妆品牌", user: "18–30 岁成分党女性",
+          goal: "12 个月进入细分市场 TOP 3", context: "对手预算充足、品牌认知强；我方预算有限、产品迭代快；线上种草成本持续上升。",
+          mirror: "刘备入蜀", era: "三国", stage: "核心阶段：建立根据地", match: 82,
+          insight: "与其在对手控制的高端叙事里正面消耗，不如先占据一个需求清晰、供给不足的细分人群。",
+          labels: ["新锐品牌", "头部品牌", "成分党", "内容社区", "产品速度", "需求分化"]
+        },
+        saas: {
+          self: "10 人 AI SaaS 团队", rival: "拥有渠道的大型软件厂商", user: "成长型跨境电商团队",
+          goal: "6 个月获得 100 家付费客户", context: "大厂功能多但交付慢；我方懂垂直流程、现金流紧张；客户决策周期约 30 天。",
+          mirror: "赤壁联盟", era: "三国", stage: "核心阶段：以联盟换空间", match: 88,
+          insight: "不要复制大厂的完整产品线。联合垂直服务商切入一个高频流程，用渠道互补换取生存空间。",
+          labels: ["AI 团队", "软件大厂", "跨境电商", "服务商", "垂直经验", "AI 窗口"]
+        },
+        retail: {
+          self: "区域连锁零售品牌", rival: "即时零售与低价平台", user: "三公里内高频家庭用户",
+          goal: "一年内恢复门店增长", context: "门店位置好但会员沉睡；平台持续补贴；供应链稳定，组织行动速度偏慢。",
+          mirror: "贾府治事", era: "红楼梦", stage: "核心阶段：盘活内部资源", match: 76,
+          insight: "真正的突破点不只在外部竞争，而在内部资源是否可见、责任是否清晰、会员关系能否重新流动。",
+          labels: ["区域连锁", "低价平台", "家庭用户", "三公里门店", "供应链", "即时零售"]
+        }
+      };
+      var nodeInfo = {
+        self: ["我方", "决策速度与产品洞察", "优势：行动快，但资源必须聚焦"],
+        rival: ["对手", "品牌认知与渠道控制", "强势：预算足；弱点：细分响应速度慢"],
+        user: ["用户", "未被满足的细分需求", "关键：需求必须足够具体且可验证"],
+        channel: ["渠道", "内容社区与垂直伙伴", "杠杆：降低市场教育和信任成本"],
+        resource: ["资源", "团队、现金流与产品速度", "约束：资源必须集中在一个突破口"],
+        timing: ["时机", "品类与技术窗口", "窗口：未来 3–6 个月形成先发位置"]
+      };
+      var strategies = {
+        avoid: { name: "避实击虚", lever: "避开对手主战场", steps: ["定义细分战场", "验证关键需求", "建立渠道样板", "复制优势单元"] },
+        ally: { name: "联盟借势", lever: "用外部杠杆放大速度", steps: ["识别互补盟友", "设计资源交换", "启动联合试点", "固化合作机制"] },
+        defend: { name: "先为不可胜", lever: "先守住不可失之地", steps: ["守住现金流", "稳住核心用户", "设置风险预警", "等待扩张窗口"] }
+      };
+
+      var linksLayer = root.querySelector("#ic-links");
+      links.forEach(function (pair, index) {
+        var a = positions[pair[0]];
+        var b = positions[pair[1]];
+        var line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        line.setAttribute("x1", a[0]); line.setAttribute("y1", a[1]);
+        line.setAttribute("x2", b[0]); line.setAttribute("y2", b[1]);
+        line.setAttribute("class", index % 4 === 0 ? "link strong" : "link");
+        line.dataset.a = pair[0]; line.dataset.b = pair[1];
+        linksLayer.appendChild(line);
+      });
+
+      var scenarioSelect = root.querySelector("#ic-scenario");
+      var focusSelect = root.querySelector("#ic-focus");
+      var fields = {
+        self: root.querySelector("#ic-self"), rival: root.querySelector("#ic-rival"),
+        user: root.querySelector("#ic-user"), goal: root.querySelector("#ic-goal"),
+        context: root.querySelector("#ic-context")
+      };
+      var activeStrategy = "avoid";
+      var activeView = "relation";
+
+      function setPressed(buttons, activeButton) {
+        buttons.forEach(function (button) {
+          var selected = button === activeButton;
+          button.setAttribute("aria-pressed", selected ? "true" : "false");
+          button.classList.toggle("btn-primary", selected);
+        });
+      }
+
+      function updateFocus() {
+        var focus = focusSelect.value;
+        var info = nodeInfo[focus];
+        root.querySelectorAll(".node").forEach(function (node) { node.classList.toggle("focus", node.dataset.node === focus); });
+        root.querySelectorAll(".link").forEach(function (line) {
+          var related = line.dataset.a === focus || line.dataset.b === focus;
+          line.classList.toggle("active", related);
+          if (activeView === "impact" && related) line.style.strokeWidth = "4";
+          else line.style.strokeWidth = "";
+        });
+        root.querySelector("#ic-focus-badge").textContent = "当前观察 · " + info[0];
+        root.querySelector("#ic-focus-title").textContent = info[1];
+        root.querySelector("#ic-focus-detail").textContent = info[2];
+      }
+
+      function updateScenario() {
+        var data = scenarios[scenarioSelect.value];
+        Object.keys(fields).forEach(function (key) { fields[key].value = data[key]; });
+        root.querySelector("#ic-mirror-name").textContent = data.mirror;
+        root.querySelector("#ic-era").textContent = data.era;
+        root.querySelector("#ic-stage").textContent = data.stage;
+        root.querySelector("#ic-match-number").textContent = data.match + "%";
+        root.querySelector("#ic-match-bar").style.width = data.match + "%";
+        root.querySelector("#ic-insight").textContent = data.insight;
+        root.querySelectorAll(".node .sub").forEach(function (label, index) { label.textContent = data.labels[index]; });
+      }
+
+      function updateStrategy(key, button) {
+        activeStrategy = key;
+        var data = strategies[key];
+        setPressed(root.querySelectorAll("[data-strategy]"), button);
+        root.querySelector("#ic-lever-sub").textContent = data.lever;
+        root.querySelector("#ic-path-title").textContent = "05 · " + data.name;
+        root.querySelectorAll(".ic-step strong").forEach(function (step, index) { step.textContent = "0" + (index + 1) + " " + data.steps[index]; });
+      }
+
+      scenarioSelect.addEventListener("change", updateScenario);
+      focusSelect.addEventListener("change", updateFocus);
+      root.querySelectorAll("[data-view]").forEach(function (button) {
+        button.addEventListener("click", function () {
+          activeView = button.dataset.view;
+          setPressed(root.querySelectorAll("[data-view]"), button);
+          root.querySelector("#ic-map-mode").textContent = activeView === "relation" ? "关系视图" : "影响力视图";
+          updateFocus();
+        });
+      });
+      root.querySelectorAll("[data-strategy]").forEach(function (button) {
+        button.addEventListener("click", function () { updateStrategy(button.dataset.strategy, button); });
+      });
+      root.querySelector("#ic-generate").addEventListener("click", function () {
+        var button = this;
+        button.textContent = "已生成 · 点击可重新分析";
+        root.querySelector("#ic-focus-detail").textContent = "分析完成：" + fields.goal.value;
+      });
+      updateScenario();
+      updateFocus();
+    })();
+  </script>
+</div>
+
+<script id="codex-visualization-floating-ui-core" src="https://unpkg.com/@floating-ui/core@1.7.3/dist/floating-ui.core.umd.min.js"></script>
+<script id="codex-visualization-floating-ui-dom" src="https://unpkg.com/@floating-ui/dom@1.7.4/dist/floating-ui.dom.umd.min.js"></script>
+<script id="codex-visualization-lucide" async src="https://unpkg.com/lucide@1.17.0/dist/umd/lucide.js"></script>
+<script id="codex-visualization-tooltip">/* oxlint-disable typescript/no-unsafe-argument, typescript/no-unsafe-call, typescript/no-unsafe-return */
+// Runs inside the visualization sandbox, not the host webview.
+(() => {
+  if (window.FloatingUIDOM == null) {
+    return;
+  }
+  const { autoUpdate, computePosition, flip, offset, shift, size } =
+    window.FloatingUIDOM;
+  const tooltipPlacements = new Set(["top", "right", "bottom", "left"]);
+  const tooltipId = `codex-visualization-tooltip-${
+    window.crypto?.randomUUID?.() ?? Date.now().toString(36)
+  }`;
+  const tooltipGap = 5;
+  const hoverDelay = 700;
+  const skipDelay = 300;
+  let activeTrigger = null;
+  let pendingTrigger = null;
+  let tooltip = null;
+  let openTimeout = null;
+  let autoUpdateCleanup = null;
+  let positionRequest = 0;
+  let skipDelayUntil = 0;
+
+  const getTrigger = (target) =>
+    target?.nodeType === Node.ELEMENT_NODE
+      ? target.closest("[data-tooltip]")
+      : null;
+  const containsTarget = (trigger, target) =>
+    target?.nodeType != null && trigger.contains(target);
+  const getContent = (trigger) =>
+    trigger.getAttribute("data-tooltip")?.trim() ?? "";
+  const getPlacement = (trigger) => {
+    const placement = trigger.getAttribute("data-tooltip-placement");
+    return tooltipPlacements.has(placement) ? placement : "top";
+  };
+  const getTooltip = () => {
+    if (tooltip == null) {
+      tooltip = document.createElement("div");
+      tooltip.id = tooltipId;
+      tooltip.className = "tooltip";
+      tooltip.setAttribute("role", "tooltip");
+    }
+    return tooltip;
+  };
+  const setDescribedBy = (trigger, described) => {
+    const ids = new Set(
+      (trigger.getAttribute("aria-describedby") ?? "")
+        .split(/\s+/)
+        .filter(Boolean),
+    );
+    if (described) {
+      ids.add(tooltipId);
+    } else {
+      ids.delete(tooltipId);
+    }
+    if (ids.size === 0) {
+      trigger.removeAttribute("aria-describedby");
+    } else {
+      trigger.setAttribute("aria-describedby", [...ids].join(" "));
+    }
+  };
+  const clearOpenTimeout = () => {
+    if (openTimeout != null) {
+      window.clearTimeout(openTimeout);
+      openTimeout = null;
+    }
+    pendingTrigger = null;
+  };
+  const closeTooltip = (activateSkipDelay = true) => {
+    clearOpenTimeout();
+    positionRequest += 1;
+    autoUpdateCleanup?.();
+    autoUpdateCleanup = null;
+    if (activeTrigger == null) {
+      return;
+    }
+    setDescribedBy(activeTrigger, false);
+    activeTrigger = null;
+    tooltip?.remove();
+    if (activateSkipDelay) {
+      skipDelayUntil = Date.now() + skipDelay;
+    }
+  };
+  const updatePosition = (trigger, floating) => {
+    const request = ++positionRequest;
+    void computePosition(trigger, floating, {
+      middleware: [
+        offset(tooltipGap),
+        flip({ padding: tooltipGap }),
+        shift({ padding: tooltipGap }),
+        size({
+          padding: tooltipGap,
+          apply({ availableHeight, availableWidth, elements }) {
+            elements.floating.style.setProperty(
+              "--tooltip-available-width",
+              `${Math.max(0, availableWidth)}px`,
+            );
+            elements.floating.style.setProperty(
+              "--tooltip-available-height",
+              `${Math.max(0, availableHeight)}px`,
+            );
+          },
+        }),
+      ],
+      placement: getPlacement(trigger),
+      strategy: "fixed",
+    })
+      .then(({ x, y }) => {
+        if (activeTrigger !== trigger || request !== positionRequest) {
+          return;
+        }
+        const scale = window.devicePixelRatio || 1;
+        floating.style.transform = `translate(${Math.round(x * scale) / scale}px, ${Math.round(y * scale) / scale}px)`;
+        floating.style.visibility = "visible";
+      })
+      .catch(() => {
+        if (activeTrigger === trigger && request === positionRequest) {
+          closeTooltip(false);
+        }
+      });
+  };
+  const openTooltip = (trigger) => {
+    const content = getContent(trigger);
+    if (!trigger.isConnected || content.length === 0) {
+      return;
+    }
+    clearOpenTimeout();
+    if (activeTrigger === trigger) {
+      return;
+    }
+    closeTooltip();
+    const floating = getTooltip();
+    floating.textContent = content;
+    floating.style.visibility = "hidden";
+    floating.style.transform = "translate(0, 0)";
+    document.body.appendChild(floating);
+    activeTrigger = trigger;
+    setDescribedBy(trigger, true);
+    autoUpdateCleanup = autoUpdate(trigger, floating, () => {
+      updatePosition(trigger, floating);
+    });
+  };
+  const requestOpen = (trigger, immediate = false) => {
+    if (
+      getContent(trigger).length === 0 ||
+      activeTrigger === trigger ||
+      pendingTrigger === trigger
+    ) {
+      return;
+    }
+    clearOpenTimeout();
+    pendingTrigger = trigger;
+    const delay =
+      immediate || activeTrigger != null || Date.now() < skipDelayUntil
+        ? 0
+        : hoverDelay;
+    if (delay === 0) {
+      openTooltip(trigger);
+      return;
+    }
+    openTimeout = window.setTimeout(() => {
+      openTimeout = null;
+      pendingTrigger = null;
+      openTooltip(trigger);
+    }, delay);
+  };
+  const handlePointerOpen = (event) => {
+    if (event.pointerType === "touch") {
+      return;
+    }
+    const trigger = getTrigger(event.target);
+    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
+      return;
+    }
+    requestOpen(trigger);
+  };
+  const handleLeave = (event) => {
+    const trigger = getTrigger(event.target);
+    if (trigger == null || containsTarget(trigger, event.relatedTarget)) {
+      return;
+    }
+    if (activeTrigger === trigger || pendingTrigger === trigger) {
+      closeTooltip();
+    }
+  };
+  const handleFocusIn = (event) => {
+    const trigger = getTrigger(event.target);
+    if (trigger?.matches(":focus-visible")) {
+      requestOpen(trigger, true);
+    }
+  };
+  const handleKeyDown = (event) => {
+    if (event.key === "Escape") {
+      closeTooltip();
+    }
+  };
+  const handleContextMenu = (event) => {
+    const trigger = getTrigger(event.target);
+    if (activeTrigger === trigger || pendingTrigger === trigger) {
+      closeTooltip();
+    }
+  };
+  const destroy = () => {
+    closeTooltip(false);
+    document.removeEventListener("pointerover", handlePointerOpen);
+    document.removeEventListener("pointerout", handleLeave);
+    document.removeEventListener("focusin", handleFocusIn);
+    document.removeEventListener("focusout", handleLeave);
+    document.removeEventListener("keydown", handleKeyDown);
+    document.removeEventListener("contextmenu", handleContextMenu);
+    tooltip = null;
+  };
+
+  document.addEventListener("pointerover", handlePointerOpen);
+  document.addEventListener("pointerout", handleLeave);
+  document.addEventListener("focusin", handleFocusIn);
+  document.addEventListener("focusout", handleLeave);
+  document.addEventListener("keydown", handleKeyDown);
+  document.addEventListener("contextmenu", handleContextMenu);
+  window.addEventListener("pagehide", destroy, { once: true });
+})();
+</script>
+<script id="codex-visualization-lucide-initialization">(() => {
+  const initialize = () => {
+    globalThis.lucide?.createIcons({ attrs: { width: 16, height: 16 } });
+  };
+  if (globalThis.lucide != null) {
+    initialize();
+    return;
+  }
+  document
+    .getElementById("codex-visualization-lucide")
+    ?.addEventListener("load", initialize, { once: true });
+})();
+</script>
+</body>
+</html>
