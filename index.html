@@ -35,9 +35,10 @@
     .nav-item{border:0;background:transparent;padding:0 23px;position:relative;font:16px var(--serif);display:flex;align-items:center;gap:8px;color:#4d493f}
     .nav-item.active{color:var(--ink)}.nav-item.active:after{content:"";position:absolute;bottom:0;left:18px;right:18px;height:2px;background:var(--cinnabar)}
     .nav-ico{font-family:var(--sans);font-size:18px}
-    .top-actions{min-width:235px;display:flex;justify-content:flex-end;align-items:center;gap:19px;color:#625d53;font-size:13px}
-    .bell{font-size:20px;position:relative}.bell:after{content:"";width:5px;height:5px;border-radius:50%;background:var(--cinnabar);position:absolute;top:0;right:-1px}
-    .avatar{width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:#e6dcc8;font:19px var(--kai)}
+    .top-actions{min-width:235px;display:flex;justify-content:flex-end;align-items:center;gap:10px;color:#625d53;font-size:13px}
+    .top-action{border:0;background:transparent;padding:7px;color:#625d53;border-radius:4px}.top-action:hover{background:#e9dfcd;color:var(--cinnabar)}
+    .bell{font-size:20px;position:relative}.bell:after{content:"";width:5px;height:5px;border-radius:50%;background:var(--cinnabar);position:absolute;top:5px;right:3px}
+    .avatar{border:0;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:#e6dcc8;font:19px var(--kai)}.avatar:hover{box-shadow:0 0 0 2px rgba(169,52,32,.16)}
     main{padding:16px 20px 18px;display:grid;grid-template-columns:352px minmax(520px,1fr) 420px;grid-template-rows:minmax(650px,calc(100vh - 170px)) 118px;gap:12px;max-width:1580px;margin:auto}
     .panel{border:1px solid var(--line);border-radius:8px;background:var(--panel);box-shadow:0 2px 9px rgba(76,55,24,.04);overflow:hidden;position:relative}
     .panel:before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(115deg,rgba(255,255,255,.22),transparent 45%)}
@@ -52,7 +53,7 @@
     .sub-label{font:12px var(--sans);color:#766f63;margin:3px 0 7px}
     textarea{resize:none;height:130px;border:1px solid var(--line-soft);border-radius:5px;background:rgba(255,253,247,.48);padding:12px;outline:0;line-height:1.8;font-size:14px}
     .counter{text-align:right;color:#9b9385;font:11px var(--sans);margin-top:-21px;padding-right:10px;position:relative}
-    .tags{display:flex;gap:7px;flex-wrap:wrap;margin:8px 0 15px}.tag{border:1px solid var(--line);background:rgba(255,253,247,.5);border-radius:3px;padding:5px 10px;font:12px var(--sans)}
+    .tags{display:flex;gap:7px;flex-wrap:wrap;margin:8px 0 15px}.tag{border:1px solid var(--line);background:rgba(255,253,247,.5);border-radius:3px;padding:5px 10px;font:12px var(--sans)}.tag:hover,.tag.selected{border-color:var(--cinnabar);color:var(--cinnabar);background:rgba(169,52,32,.05)}
     .tag-add{width:29px;padding:5px 0;color:#7e776c}.primary{margin-top:auto;border:0;border-radius:3px;background:linear-gradient(90deg,#a82f1b,#b94125);color:#fff;height:51px;font:19px var(--serif);letter-spacing:2px;box-shadow:0 4px 10px rgba(151,43,24,.16);position:relative;overflow:hidden}
     .primary:after{content:"→";position:absolute;right:20px;font:25px var(--sans);top:9px}.primary:hover{filter:brightness(1.05)}.primary:active{transform:translateY(1px)}
     .saved{font:11px var(--sans);color:#948b7b;margin-top:13px}
@@ -76,7 +77,8 @@
     .s-ico{width:45px;height:45px;border-radius:50%;border:2px solid var(--cinnabar);display:grid;place-items:center;color:var(--cinnabar);font:22px var(--sans)}.strategy:nth-child(2) .s-ico{border-color:var(--green);color:var(--green)}.strategy:nth-child(3) .s-ico{border-color:var(--gold);color:var(--gold)}
     .s-copy h3{margin:0 0 6px;font:700 20px var(--kai)}.s-copy p{margin:0;color:#776f63;font:12px var(--sans)}.score{font:12px/2 var(--sans);color:#696256}.risk-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#d48b31;margin-left:3px}.mini-bar{height:3px;background:#d5cbb9}.mini-bar i{height:100%;display:block;width:78%;background:var(--green)}
     .all-strategy{margin:auto 0 0;border:0;border-top:1px solid var(--line-soft);background:transparent;height:39px;font:13px var(--serif);letter-spacing:1px}
-    .timeline{grid-column:1/-1;padding:14px 20px;display:grid;grid-template-columns:180px 1fr;align-items:center}.timeline h2{font:700 21px var(--kai);margin:0}.timeline h2 small{font:13px var(--sans);color:#8c8477;margin-left:8px;font-weight:400}.road{display:flex;align-items:center;height:72px}.step{display:flex;align-items:center;flex:1;position:relative}.step:after{content:"";height:1px;background:#bfb49f;flex:1;margin:0 12px}.step:last-child{flex:0 0 auto}.dot{width:41px;height:41px;border:1px solid #9f9584;border-radius:50%;display:grid;place-items:center;font:18px var(--serif);background:rgba(250,246,237,.7)}.dot.current{border:0;width:24px;background:transparent;color:var(--cinnabar);font-size:25px}.dot.goal{border-color:var(--cinnabar);color:var(--cinnabar);font:20px var(--sans)}.step-copy{margin-left:10px;white-space:nowrap}.step-copy b{display:block;font:16px var(--serif);font-weight:500}.step-copy small{font:11px var(--sans);color:#91897c}
+    .timeline{grid-column:1/-1;padding:14px 20px;display:grid;grid-template-columns:180px 1fr;align-items:center}.timeline h2{font:700 21px var(--kai);margin:0}.timeline h2 small{font:13px var(--sans);color:#8c8477;margin-left:8px;font-weight:400}.road{display:flex;align-items:center;height:72px}.step{border:0;background:transparent;padding:0;display:flex;align-items:center;flex:1;position:relative;text-align:left}.step:after{content:"";height:1px;background:#bfb49f;flex:1;margin:0 12px}.step:last-child{flex:0 0 auto}.step:hover .dot,.step.active .dot{border-color:var(--cinnabar);color:var(--cinnabar);box-shadow:0 0 0 4px rgba(169,52,32,.06)}.dot{width:41px;height:41px;border:1px solid #9f9584;border-radius:50%;display:grid;place-items:center;font:18px var(--serif);background:rgba(250,246,237,.7)}.dot.current{border:0;width:24px;background:transparent;color:var(--cinnabar);font-size:25px}.dot.goal{border-color:var(--cinnabar);color:var(--cinnabar);font:20px var(--sans)}.step-copy{margin-left:10px;white-space:nowrap}.step-copy b{display:block;font:16px var(--serif);font-weight:500}.step-copy small{font:11px var(--sans);color:#91897c}
+    .overlay{position:fixed;inset:0;background:rgba(34,29,21,.36);backdrop-filter:blur(2px);z-index:80;display:flex;justify-content:flex-end;opacity:0;pointer-events:none;transition:.2s}.overlay.open{opacity:1;pointer-events:auto}.drawer{width:min(520px,94vw);height:100%;background:var(--paper);border-left:1px solid var(--line);box-shadow:-12px 0 35px rgba(55,42,22,.18);transform:translateX(25px);transition:.24s;display:flex;flex-direction:column}.overlay.open .drawer{transform:none}.drawer-head{height:76px;padding:0 22px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line)}.drawer-head h2{margin:0;font:700 25px var(--kai);letter-spacing:1px}.drawer-close{border:1px solid var(--line);background:rgba(255,255,255,.35);width:34px;height:34px;border-radius:50%;font:22px var(--sans)}.drawer-body{padding:20px;overflow:auto;display:grid;gap:12px}.drawer-intro{margin:0 0 4px;color:#6f685c;font:14px/1.8 var(--sans)}.library-card{border:1px solid var(--line);border-radius:7px;background:rgba(255,253,247,.55);padding:15px;display:grid;grid-template-columns:1fr auto;gap:8px 16px;align-items:center}.library-card h3{margin:0;font:700 20px var(--kai)}.library-card p{grid-column:1/-1;margin:0;color:#756e61;font:13px/1.7 var(--sans)}.library-card button{border:1px solid var(--cinnabar);color:var(--cinnabar);background:transparent;border-radius:3px;padding:7px 11px}.library-card button:hover{background:var(--cinnabar);color:#fff}.badge{font:11px var(--sans);color:var(--cinnabar);border:1px solid rgba(169,52,32,.28);padding:3px 7px;border-radius:20px}.profile-row{display:flex;align-items:center;gap:14px;padding:12px;border-bottom:1px solid var(--line-soft)}.profile-seal{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:#e7dcc7;font:22px var(--kai)}
     .toast{position:fixed;right:24px;bottom:24px;padding:12px 18px;background:#2f2e29;color:#fff;border-left:3px solid var(--cinnabar);font:13px var(--sans);opacity:0;transform:translateY(12px);pointer-events:none;transition:.25s;z-index:60}.toast.show{opacity:1;transform:none}
     @media(max-width:1250px){.top-actions{min-width:auto}.brand{min-width:300px}nav .nav-item{padding:0 12px}main{grid-template-columns:310px minmax(500px,1fr) 350px}.strategy{grid-template-columns:44px 1fr 62px}.s-copy h3{font-size:17px}}
     @media(max-width:1050px){nav{display:none}.top-actions{margin-left:auto}main{grid-template-columns:340px 1fr;grid-template-rows:auto auto auto}.right{grid-column:1/-1;display:grid;grid-template-columns:1fr 1.4fr}.mirror{height:auto}.strategy-box{min-height:285px}.timeline{grid-column:1/-1}.left,.center{min-height:650px}}
@@ -93,7 +95,7 @@
       <button class="nav-item"><span class="nav-ico">▤</span>案例库</button>
       <button class="nav-item"><span class="nav-ico">◔</span>洞察</button>
     </nav>
-    <div class="top-actions"><span>◷　更新：刚刚</span><span class="bell">♧</span><span class="avatar">策</span><span>⌄</span></div>
+    <div class="top-actions"><button class="top-action" id="refreshBtn">◷　更新：刚刚</button><button class="top-action bell" id="bellBtn" aria-label="通知">♧</button><button class="avatar" id="profileBtn" aria-label="用户菜单">策</button><button class="top-action" id="profileArrow" aria-label="展开用户菜单">⌄</button></div>
   </header>
 
   <main>
@@ -138,35 +140,88 @@
     <aside class="right">
       <section class="panel mirror" id="mirror"><h2 class="panel-title">历史镜像 <span class="info">i</span></h2><h2 id="mirrorTitle">刘备入蜀</h2><div class="meta">时代：三国<br>核心阶段：建基立业</div><div class="match"><span>镜像匹配度：</span><b id="matchScore">82%</b><span class="bar"><i id="matchBar"></i></span></div><div class="meta">启示维度：战略进入 / 势力整合 / 根据地经营</div></section>
       <section class="panel strategy-box" id="strategyBox">
-        <article class="strategy selected" data-strategy="避实击虚"><div class="s-ico">⌖</div><div class="s-copy"><h3>避实击虚</h3><p>避开强敌主战场，主攻其薄弱环节</p></div><div class="score">风险：中 <i class="risk-dot"></i><br>匹配度：78%<div class="mini-bar"><i></i></div></div></article>
-        <article class="strategy" data-strategy="联盟借势"><div class="s-ico">⌁</div><div class="s-copy"><h3>联盟借势</h3><p>联合友势资源，放大自身优势</p></div><div class="score">风险：低 <i class="risk-dot" style="background:var(--green)"></i><br>匹配度：74%<div class="mini-bar"><i style="width:74%"></i></div></div></article>
-        <article class="strategy" data-strategy="先为不可胜"><div class="s-ico">⚑</div><div class="s-copy"><h3>先为不可胜</h3><p>先立足根基，构建难以撼动的优势</p></div><div class="score">风险：中 <i class="risk-dot"></i><br>匹配度：76%<div class="mini-bar"><i style="width:76%"></i></div></div></article>
-        <button class="all-strategy">查看全部策略（12）　〉</button>
+        <article class="strategy selected" tabindex="0" role="button" data-strategy="避实击虚"><div class="s-ico">⌖</div><div class="s-copy"><h3>避实击虚</h3><p>避开强敌主战场，主攻其薄弱环节</p></div><div class="score">风险：中 <i class="risk-dot"></i><br>匹配度：78%<div class="mini-bar"><i></i></div></div></article>
+        <article class="strategy" tabindex="0" role="button" data-strategy="联盟借势"><div class="s-ico">⌁</div><div class="s-copy"><h3>联盟借势</h3><p>联合友势资源，放大自身优势</p></div><div class="score">风险：低 <i class="risk-dot" style="background:var(--green)"></i><br>匹配度：74%<div class="mini-bar"><i style="width:74%"></i></div></div></article>
+        <article class="strategy" tabindex="0" role="button" data-strategy="先为不可胜"><div class="s-ico">⚑</div><div class="s-copy"><h3>先为不可胜</h3><p>先立足根基，构建难以撼动的优势</p></div><div class="score">风险：中 <i class="risk-dot"></i><br>匹配度：76%<div class="mini-bar"><i style="width:76%"></i></div></div></article>
+        <button class="all-strategy" id="allStrategyBtn">查看全部策略（12）　〉</button>
       </section>
     </aside>
 
     <section class="panel timeline" id="path"><h2>策略路径 <small>（示例）</small></h2><div class="road">
-      <div class="step"><span class="dot current">⊙</span><span class="step-copy"><b>当前</b></span></div>
-      <div class="step"><span class="dot">1</span><span class="step-copy"><b>立足差异</b><small>0–3个月</small></span></div>
-      <div class="step"><span class="dot">2</span><span class="step-copy"><b>破局渠道</b><small>3–6个月</small></span></div>
-      <div class="step"><span class="dot">3</span><span class="step-copy"><b>规模扩张</b><small>6–9个月</small></span></div>
-      <div class="step"><span class="dot">4</span><span class="step-copy"><b>固化优势</b><small>9–12个月</small></span></div>
-      <div class="step"><span class="dot goal">⚑</span><span class="step-copy"><b>目标达成</b><small>12个月＋</small></span></div>
+      <button class="step active" data-phase="当前：完成局势输入，识别核心矛盾"><span class="dot current">⊙</span><span class="step-copy"><b>当前</b></span></button>
+      <button class="step" data-phase="立足差异：确定不可替代的价值主张"><span class="dot">1</span><span class="step-copy"><b>立足差异</b><small>0–3个月</small></span></button>
+      <button class="step" data-phase="破局渠道：选择一个低成本突破口"><span class="dot">2</span><span class="step-copy"><b>破局渠道</b><small>3–6个月</small></span></button>
+      <button class="step" data-phase="规模扩张：复制已经验证的增长单元"><span class="dot">3</span><span class="step-copy"><b>规模扩张</b><small>6–9个月</small></span></button>
+      <button class="step" data-phase="固化优势：沉淀品牌、组织和供应链壁垒"><span class="dot">4</span><span class="step-copy"><b>固化优势</b><small>9–12个月</small></span></button>
+      <button class="step" data-phase="目标达成：进入市场份额前三并开始守势"><span class="dot goal">⚑</span><span class="step-copy"><b>目标达成</b><small>12个月＋</small></span></button>
     </div></section>
   </main>
+  <div class="overlay" id="overlay" aria-hidden="true">
+    <aside class="drawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle">
+      <header class="drawer-head"><h2 id="drawerTitle">策略库</h2><button class="drawer-close" id="drawerClose" aria-label="关闭">×</button></header>
+      <div class="drawer-body" id="drawerBody"></div>
+    </aside>
+  </div>
   <div class="toast" id="toast">局势已重新推演</div>
   <script>
     const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
-    $$('.clear').forEach(btn=>btn.addEventListener('click',()=>{btn.previousElementSibling.value='';btn.previousElementSibling.focus()}));
-    const ctx=$('#contextInput'),count=$('#count');ctx.addEventListener('input',()=>count.textContent=ctx.value.length);
-    $$('.seg button').forEach(btn=>btn.addEventListener('click',()=>{$$('.seg button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');$('#graph').classList.toggle('impact',btn.dataset.mode==='impact');$$('.edge').forEach((e,i)=>{if(btn.dataset.mode==='impact')e.style.opacity=String(.25+(i%5)*.16);else e.style.opacity=''})}));
-    $$('.node').forEach(n=>n.addEventListener('click',()=>{$$('.node').forEach(x=>x.classList.remove('active'));n.classList.add('active');$('#saved').textContent='当前观察：'+n.dataset.node+' · 已同步更新关系链'}));
     const mirrors={"避实击虚":["刘备入蜀",82],"联盟借势":["赤壁联盟",79],"先为不可胜":["诸葛亮隆中对",86]};
-    $$('.strategy').forEach(s=>s.addEventListener('click',()=>{$$('.strategy').forEach(x=>x.classList.remove('selected'));s.classList.add('selected');const m=mirrors[s.dataset.strategy];$('#mirrorTitle').textContent=m[0];$('#matchScore').textContent=m[1]+'%';$('#matchBar').style.width=m[1]+'%';show('已切换策略：'+s.dataset.strategy)}));
-    $('#analyse').addEventListener('click',()=>{const v=$('#selfInput').value.trim();if(!v){show('请先填写“我方”');return}$('#analyse').textContent='正在推演…';setTimeout(()=>{$('#analyse').textContent='重新生成局势分析';$('#saved').textContent='推演完成 · 刚刚保存';$('#matchScore').textContent='86%';$('#matchBar').style.width='86%';show('已从千年经典中完成新一轮推演')},650)});
-    const sectionTargets=['#graphPanel','#mirror','#strategyBox','#path','#path'];
-    $$('.nav-item').forEach((n,i)=>n.addEventListener('click',()=>{$$('.nav-item').forEach(x=>x.classList.remove('active'));n.classList.add('active');$(sectionTargets[i]).scrollIntoView({behavior:'smooth',block:'center'})}));
-    $$('.tag').forEach(t=>t.addEventListener('click',()=>{if(t.classList.contains('tag-add')){const name=prompt('添加一个局势标签');if(name){const b=document.createElement('button');b.className='tag';b.textContent=name;t.before(b)}}else t.classList.toggle('selected')}));
+    const library={
+      history:`<p class="drawer-intro">从相似的势、局、人和资源约束中寻找镜像。点击后会同步更新右侧历史镜像。</p>
+        <article class="library-card"><h3>刘备入蜀</h3><span class="badge">匹配 82%</span><p>弱势进入、整合本地力量、建立长期根据地。</p><button data-action="mirror" data-title="刘备入蜀" data-score="82">载入镜像</button></article>
+        <article class="library-card"><h3>赤壁联盟</h3><span class="badge">匹配 79%</span><p>面对强敌，以联盟、地势与时机改写力量对比。</p><button data-action="mirror" data-title="赤壁联盟" data-score="79">载入镜像</button></article>
+        <article class="library-card"><h3>隆中对</h3><span class="badge">匹配 86%</span><p>先建立可持续根据地，再形成多阶段竞争路径。</p><button data-action="mirror" data-title="诸葛亮隆中对" data-score="86">载入镜像</button></article>
+        <article class="library-card"><h3>曹操迎天子</h3><span class="badge">匹配 73%</span><p>先取得规则与叙事优势，再整合外部资源。</p><button data-action="mirror" data-title="曹操迎天子" data-score="73">载入镜像</button></article>`,
+      strategies:`<p class="drawer-intro">十二种基础策略来自《孙子兵法》、四大名著与历史竞争案例。选择后会更新局势镜像。</p>
+        ${[['避实击虚','绕开对手优势区，集中资源突破薄弱点','刘备入蜀',82],['联盟借势','联合互补资源，改变单点力量对比','赤壁联盟',79],['先为不可胜','先完成防守闭环，再寻找进攻机会','诸葛亮隆中对',86],['以正合，以奇胜','常规能力稳定基本盘，奇兵制造增量','韩信暗度陈仓',81],['围魏救赵','攻击对手必须回防的关键位置','孙膑围魏救赵',77],['因粮于敌','把增长建立在可复用的外部资源上','曹操屯田',75],['以迂为直','用阶段性绕行换取最终速度','红军四渡赤水',72],['声东击西','用注意力调动掩护真实突破口','诸葛亮声东击西',71],['远交近攻','分层管理竞争与合作关系','范雎远交近攻',76],['借船出海','借成熟渠道完成低成本验证','草船借箭',74],['釜底抽薪','处理问题赖以存在的底层条件','官渡断粮',80],['乘势而起','在趋势窗口中快速集中力量','陈胜吴广起义',70]].map(x=>`<article class="library-card"><h3>${x[0]}</h3><span class="badge">匹配 ${x[3]}%</span><p>${x[1]}</p><button data-action="strategy" data-name="${x[0]}" data-title="${x[2]}" data-score="${x[3]}">应用策略</button></article>`).join('')}`,
+      cases:`<p class="drawer-intro">选择一个现代商业案例，系统会把示例参数写入左侧局面，方便立即推演。</p>
+        <article class="library-card"><h3>新消费品牌破圈</h3><span class="badge">品牌</span><p>以细分人群和内容渠道突破成熟品牌包围。</p><button data-action="case" data-case="beauty">应用案例</button></article>
+        <article class="library-card"><h3>区域零售连锁转型</h3><span class="badge">零售</span><p>面对即时零售与低价平台，重构门店和会员价值。</p><button data-action="case" data-case="retail">应用案例</button></article>
+        <article class="library-card"><h3>制造企业品牌化</h3><span class="badge">制造</span><p>从代工能力走向产品定义权与品牌溢价。</p><button data-action="case" data-case="factory">应用案例</button></article>
+        <article class="library-card"><h3>AI工具进入企业市场</h3><span class="badge">AI</span><p>在大厂夹击中寻找垂直场景和数据壁垒。</p><button data-action="case" data-case="ai">应用案例</button></article>`,
+      insights:`<p class="drawer-intro">当前局面已形成四条可操作洞察。点击可将洞察设为本轮观察重点。</p>
+        <article class="library-card"><h3>真正的对手可能不是品牌</h3><span class="badge">竞争</span><p>用户预算迁移与渠道规则变化，可能比同类品牌影响更大。</p><button data-action="insight" data-name="重新定义对手边界">设为重点</button></article>
+        <article class="library-card"><h3>资源少不等于没有杠杆</h3><span class="badge">资源</span><p>小品牌可以通过成分认知、达人信任和柔性供应链集中发力。</p><button data-action="insight" data-name="寻找非对称杠杆">设为重点</button></article>
+        <article class="library-card"><h3>先建立根据地</h3><span class="badge">路径</span><p>在一个核心人群和一个渠道中形成胜率，再复制到更大市场。</p><button data-action="insight" data-name="建立细分根据地">设为重点</button></article>
+        <article class="library-card"><h3>速度必须服从聚焦</h3><span class="badge">时机</span><p>行动快有价值，但资源必须集中在可验证的关键假设上。</p><button data-action="insight" data-name="聚焦关键假设">设为重点</button></article>`,
+      notifications:`<p class="drawer-intro">系统动态与推演提醒。</p><article class="library-card"><h3>第一版操作台已就绪</h3><span class="badge">刚刚</span><p>关系视图、历史镜像、策略库和路径推演均可使用。</p></article><article class="library-card"><h3>发现新的历史镜像</h3><span class="badge">2分钟前</span><p>“隆中对”与当前品牌建立细分根据地的路径匹配度达到 86%。</p></article><button data-action="clear" class="tag">全部标为已读</button>`,
+      profile:`<div class="profile-row"><span class="profile-seal">策</span><div><b>商业推演者</b><br><small>本地演示账户</small></div></div><article class="library-card"><h3>我的局势草稿</h3><span class="badge">1 份</span><p>当前内容保存在本次浏览器页面中。</p><button data-action="profile">查看当前草稿</button></article><article class="library-card"><h3>关于系统</h3><p>以中国经典、历史案例与现代商业框架为底层的可视化推演原型。</p></article>`,
+      tags:`<p class="drawer-intro">选择一个标签添加到当前局势。</p>${['渠道变革','价格竞争','品牌升级','出海增长','组织转型','供应链','AI应用','存量竞争'].map(t=>`<article class="library-card"><h3>${t}</h3><button data-action="tag" data-name="${t}">添加</button></article>`).join('')}`
+    };
+    const cases={
+      beauty:['新锐国货美妆品牌','国际中高端美妆品牌','18–30岁成分党女性','12个月内市场份额进入TOP3','• 产品成分温和有效，价格亲民\n• 线上种草声量增长快\n• 线下渠道覆盖不足'],
+      retail:['区域连锁零售品牌','即时零售与低价平台','三公里内高频家庭用户','一年内恢复门店增长','• 门店位置好但会员沉睡\n• 平台持续补贴\n• 供应链稳定，组织行动偏慢'],
+      factory:['精密制造企业','拥有品牌心智的行业龙头','重视可靠性的企业客户','三年建立自主品牌','• 代工能力领先\n• 缺乏终端用户认知\n• 渠道高度依赖大客户'],
+      ai:['垂直行业AI工具','通用大模型与传统软件商','中型企业业务负责人','一年获得100家付费客户','• 场景理解深入\n• 销售资源有限\n• 数据闭环尚未形成']
+    };
+    const ctx=$('#contextInput'),count=$('#count');count.textContent=ctx.value.length;
+    $$('.clear').forEach(btn=>btn.addEventListener('click',e=>{e.preventDefault();btn.previousElementSibling.value='';btn.previousElementSibling.focus();show('已清空该项')}));
+    ctx.addEventListener('input',()=>count.textContent=ctx.value.length);
+    $$('.seg button').forEach(btn=>btn.addEventListener('click',()=>{
+      $$('.seg button').forEach(b=>b.classList.remove('active'));btn.classList.add('active');
+      const impact=btn.dataset.mode==='impact';
+      $$('.edge').forEach((e,i)=>e.style.opacity=impact?String(.25+(i%5)*.16):'');
+      $$('.node').forEach((n,i)=>n.style.transform=impact?`translate(-50%,-50%) scale(${1+(5-i)*.025})`:'');
+      show(impact?'已切换到影响力视图':'已切换到关系视图')
+    }));
+    $$('.node').forEach(n=>n.addEventListener('click',()=>{$$('.node').forEach(x=>x.classList.remove('active'));n.classList.add('active');$('#saved').textContent='当前观察：'+n.dataset.node+' · 已同步更新关系链';show('正在观察：'+n.dataset.node)}));
+    function applyMirror(title,score){$('#mirrorTitle').textContent=title;$('#matchScore').textContent=score+'%';$('#matchBar').style.width=score+'%';$('#mirror').scrollIntoView({behavior:'smooth',block:'center'})}
+    function selectStrategy(s){$$('.strategy').forEach(x=>x.classList.toggle('selected',x===s));const m=mirrors[s.dataset.strategy];applyMirror(m[0],m[1]);show('已切换策略：'+s.dataset.strategy)}
+    $$('.strategy').forEach(s=>{s.addEventListener('click',()=>selectStrategy(s));s.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();selectStrategy(s)}})});
+    $('#analyse').addEventListener('click',()=>{const required=['#selfInput','#rivalInput','#userInput','#goalInput'];const empty=required.find(s=>!$(s).value.trim());if(empty){$(empty).focus();show('请先补全四项核心局面');return}const btn=$('#analyse');btn.disabled=true;btn.textContent='正在推演…';setTimeout(()=>{btn.disabled=false;btn.textContent='重新生成局势分析';$('#saved').textContent='推演完成 · 刚刚保存';applyMirror('诸葛亮隆中对',86);show('已完成推演：发现 2 个杠杆点与 4 条路径')},850)});
+    function openDrawer(title,html){$('#drawerTitle').textContent=title;$('#drawerBody').innerHTML=html;$('#overlay').classList.add('open');$('#overlay').setAttribute('aria-hidden','false');document.body.style.overflow='hidden';setTimeout(()=>$('#drawerClose').focus(),20)}
+    function closeDrawer(){$('#overlay').classList.remove('open');$('#overlay').setAttribute('aria-hidden','true');document.body.style.overflow=''}
+    const navActions=[()=>$('#graphPanel').scrollIntoView({behavior:'smooth'}),()=>openDrawer('历史镜像',library.history),()=>openDrawer('策略库',library.strategies),()=>openDrawer('案例库',library.cases),()=>openDrawer('洞察',library.insights)];
+    $$('.nav-item').forEach((n,i)=>n.addEventListener('click',()=>{$$('.nav-item').forEach(x=>x.classList.remove('active'));n.classList.add('active');navActions[i]()}));
+    $('#allStrategyBtn').addEventListener('click',()=>openDrawer('策略库',library.strategies));
+    $('#bellBtn').addEventListener('click',()=>openDrawer('通知',library.notifications));
+    $('#profileBtn').addEventListener('click',()=>openDrawer('用户菜单',library.profile));
+    $('#profileArrow').addEventListener('click',()=>openDrawer('用户菜单',library.profile));
+    $('#refreshBtn').addEventListener('click',e=>{e.currentTarget.textContent='◷　更新中…';setTimeout(()=>{e.currentTarget.textContent='◷　更新：刚刚';show('局势数据已刷新')},600)});
+    $('#drawerClose').addEventListener('click',closeDrawer);$('#overlay').addEventListener('click',e=>{if(e.target===$('#overlay'))closeDrawer()});document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDrawer()});
+    $('.tags').addEventListener('click',e=>{const t=e.target.closest('.tag');if(!t)return;if(t.classList.contains('tag-add'))openDrawer('添加局势标签',library.tags);else{t.classList.toggle('selected');show(t.classList.contains('selected')?'已启用标签：'+t.textContent:'已取消标签：'+t.textContent)}});
+    $$('.step').forEach(s=>s.addEventListener('click',()=>{$$('.step').forEach(x=>x.classList.remove('active'));s.classList.add('active');show(s.dataset.phase)}));
+    $('#drawerBody').addEventListener('click',e=>{const b=e.target.closest('[data-action]');if(!b)return;const a=b.dataset.action;if(a==='mirror'){applyMirror(b.dataset.title,b.dataset.score);closeDrawer();show('已载入历史镜像：'+b.dataset.title)}if(a==='strategy'){applyMirror(b.dataset.title,b.dataset.score);$('#saved').textContent='当前策略：'+b.dataset.name+' · 已加入推演';closeDrawer();show('已应用策略：'+b.dataset.name)}if(a==='case'){const d=cases[b.dataset.case];['#selfInput','#rivalInput','#userInput','#goalInput','#contextInput'].forEach((s,i)=>$(s).value=d[i]);count.textContent=ctx.value.length;closeDrawer();$('#situation').scrollIntoView({behavior:'smooth'});show('案例参数已载入，可立即推演')}if(a==='insight'){$('#saved').textContent='本轮观察重点：'+b.dataset.name;closeDrawer();show('已设为观察重点：'+b.dataset.name)}if(a==='tag'){if(!$$('.tag').some(t=>t.textContent===b.dataset.name)){const n=document.createElement('button');n.className='tag selected';n.textContent=b.dataset.name;$('.tag-add').before(n)}closeDrawer();show('已添加标签：'+b.dataset.name)}if(a==='clear'){$('#drawerBody').innerHTML='<p class="drawer-intro">暂无未读通知。</p>';show('通知已全部标为已读')}if(a==='profile'){closeDrawer();$('#situation').scrollIntoView({behavior:'smooth'});show('已定位到当前局势草稿')}});
     function show(msg){const t=$('#toast');t.textContent=msg;t.classList.add('show');clearTimeout(window.__toast);window.__toast=setTimeout(()=>t.classList.remove('show'),2200)}
   </script>
 </body>
