@@ -164,7 +164,8 @@
     const mirrors={"避实击虚":["刘备入蜀",82],"联盟借势":["赤壁联盟",79],"先为不可胜":["诸葛亮隆中对",86]};
     $$('.strategy').forEach(s=>s.addEventListener('click',()=>{$$('.strategy').forEach(x=>x.classList.remove('selected'));s.classList.add('selected');const m=mirrors[s.dataset.strategy];$('#mirrorTitle').textContent=m[0];$('#matchScore').textContent=m[1]+'%';$('#matchBar').style.width=m[1]+'%';show('已切换策略：'+s.dataset.strategy)}));
     $('#analyse').addEventListener('click',()=>{const v=$('#selfInput').value.trim();if(!v){show('请先填写“我方”');return}$('#analyse').textContent='正在推演…';setTimeout(()=>{$('#analyse').textContent='重新生成局势分析';$('#saved').textContent='推演完成 · 刚刚保存';$('#matchScore').textContent='86%';$('#matchBar').style.width='86%';show('已从千年经典中完成新一轮推演')},650)});
-    $$('.nav-item').forEach((n,i)=>n.addEventListener('click',()=>{$$('.nav-item').forEach(x=>x.classList.remove('active'));n.classList.add('active');[graphPanel,mirror,strategyBox,path,path][i].scrollIntoView({behavior:'smooth',block:'center'})}));
+    const sectionTargets=['#graphPanel','#mirror','#strategyBox','#path','#path'];
+    $$('.nav-item').forEach((n,i)=>n.addEventListener('click',()=>{$$('.nav-item').forEach(x=>x.classList.remove('active'));n.classList.add('active');$(sectionTargets[i]).scrollIntoView({behavior:'smooth',block:'center'})}));
     $$('.tag').forEach(t=>t.addEventListener('click',()=>{if(t.classList.contains('tag-add')){const name=prompt('添加一个局势标签');if(name){const b=document.createElement('button');b.className='tag';b.textContent=name;t.before(b)}}else t.classList.toggle('selected')}));
     function show(msg){const t=$('#toast');t.textContent=msg;t.classList.add('show');clearTimeout(window.__toast);window.__toast=setTimeout(()=>t.classList.remove('show'),2200)}
   </script>
